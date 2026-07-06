@@ -1,0 +1,114 @@
+// Template recensioni PetsittingAle.
+// Per aggiungere una nuova recensione:
+// 1. Copia un oggetto dentro REVIEWS.
+// 2. rating accetta numeri da 0 a 5, anche mezzi voti: 3.5, 4.5, ecc.
+// 3. initials sono le lettere dentro il cerchio avatar.
+// 4. Usa testo normale, non HTML, cosi il template resta sicuro e facile da mantenere.
+
+const PAW_PATH = "M4.95422 6.47676C5.30223 7.1679 5.37126 7.96637 5.14702 8.70699C4.92277 9.4476 4.42243 10.0737 3.74949 10.4557C2.47054 10.9057 0.935801 9.84939 0.32317 8.09992C-0.0254476 7.40879 -0.0949703 6.61009 0.128993 5.86913C0.352956 5.12817 0.853256 4.50169 1.52633 4.11939C2.80528 3.66939 4.34001 4.72728 4.95422 6.47676ZM15.2505 18.9157C14.6924 18.9165 14.1397 18.8069 13.624 18.5934C13.1084 18.3799 12.64 18.0666 12.2458 17.6715C11.9509 17.3768 11.5511 17.2113 11.1342 17.2113C10.7174 17.2113 10.3175 17.3768 10.0226 17.6715C9.22396 18.4611 8.14525 18.9024 7.02218 18.8992C5.89911 18.896 4.82295 18.4484 4.02882 17.6543C3.23468 16.8601 2.78712 15.784 2.78389 14.6609C2.78066 13.5378 3.22203 12.4591 4.01159 11.6604C4.94668 10.7246 6.05703 9.98223 7.27917 9.47572C8.50131 8.96921 9.81128 8.7085 11.1342 8.7085C12.4572 8.7085 13.7671 8.96921 14.9893 9.47572C16.2114 9.98223 17.3218 10.7246 18.2569 11.6604C18.8511 12.255 19.2556 13.0123 19.4195 13.8368C19.5833 14.6612 19.499 15.5157 19.1772 16.2923C18.8554 17.0688 18.3106 17.7325 17.6117 18.1995C16.9128 18.6664 16.0911 18.9157 15.2505 18.9157ZM10.7079 3.56676C10.9084 5.67781 9.81896 7.50781 8.27633 7.65307C6.7337 7.79834 5.32054 6.20518 5.12159 4.09413C4.92106 1.98465 6.01054 0.154651 7.55317 0.00938814C9.0958 -0.137454 10.5074 1.4557 10.7079 3.56676ZM11.5605 3.56676C11.36 5.67781 12.4495 7.50781 13.9921 7.65307C15.5347 7.79834 16.9463 6.20518 17.1469 4.09413C17.3474 1.98465 16.2579 0.154651 14.7153 0.00938814C13.1726 -0.137454 11.7595 1.4557 11.5605 3.56676ZM17.3142 6.47518C16.9653 7.16665 16.8957 7.96588 17.12 8.70723C17.3443 9.44858 17.8452 10.0752 18.519 10.4573C19.7979 10.9057 21.3326 9.84939 21.9453 8.09992C22.2939 7.40879 22.3634 6.61009 22.1395 5.86913C21.9155 5.12817 21.4152 4.50169 20.7421 4.11939C19.4632 3.66939 17.9284 4.7257 17.3142 6.47518Z";
+
+const REVIEWS = [
+  {
+    rating: 5,
+    text: "Pet sitter TOP. Only e un husky, se non scarica energia ti smonta casa. Con Ale invece ha fatto una passeggiata lunga, si e divertita ed e tornata rilassatissima. Mi ha mandato foto e aggiornamenti durante. La consiglio a chiunque a Palermo cerchi un pet sitter affidabile e amorevole.",
+    initials: "G",
+    name: "Gianluca",
+    role: "Proprietario di Only",
+  },
+  {
+    rating: 4,
+    text: "Servizio preciso e dolcissimo. Ale si e presa cura di Luna durante un weekend lungo e ci ha mandato messaggi chiari, foto e aggiornamenti senza mai farci preoccupare.",
+    initials: "S",
+    name: "Sara P.",
+    role: "Proprietaria di Luna",
+  },
+  {
+    rating: 3.5,
+    text: "Molto disponibile e affettuosa con Milo. Abbiamo apprezzato la flessibilita sugli orari e la cura nei dettagli, soprattutto per pappa e passeggiate.",
+    initials: "L",
+    name: "Luca R.",
+    role: "Proprietario di Milo",
+  },
+];
+
+function createPaw(className = "") {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 23 19");
+  svg.setAttribute("aria-hidden", "true");
+  if (className) svg.setAttribute("class", className);
+
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", PAW_PATH);
+  svg.append(path);
+
+  return svg;
+}
+
+function createRating(rating) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "rating-paws";
+  wrapper.setAttribute("aria-label", `Valutazione ${rating} su 5`);
+
+  for (let index = 1; index <= 5; index += 1) {
+    if (rating >= index) {
+      wrapper.append(createPaw());
+    } else if (rating >= index - 0.5) {
+      const half = document.createElement("span");
+      half.className = "half-paw";
+      half.append(createPaw("empty"), createPaw("half-full"));
+      wrapper.append(half);
+    } else {
+      wrapper.append(createPaw("empty"));
+    }
+  }
+
+  return wrapper;
+}
+
+function createReviewCard(review) {
+  const card = document.createElement("article");
+  card.className = "card-reviews";
+
+  const text = document.createElement("p");
+  text.className = "text-lg font-medium text-text font-body";
+  text.textContent = review.text;
+
+  const reviewer = document.createElement("div");
+  reviewer.className = "flex gap-5 pt-5 reviewer";
+
+  const photo = document.createElement("div");
+  photo.className = "flex items-center justify-center w-12 h-12 rounded-full photo bg-primary";
+
+  const initials = document.createElement("p");
+  initials.className = "text-xl font-bold text-white font-body";
+  initials.textContent = review.initials;
+
+  const info = document.createElement("div");
+  info.className = "info";
+
+  const name = document.createElement("p");
+  name.className = "text-lg font-medium text-heading font-body";
+  name.textContent = review.name;
+
+  const role = document.createElement("p");
+  role.className = "text-base font-medium text-text font-body";
+  role.textContent = review.role;
+
+  photo.append(initials);
+  info.append(name, role);
+  reviewer.append(photo, info);
+  card.append(createRating(review.rating), text, reviewer);
+
+  return card;
+}
+
+function renderReviews() {
+  const container = document.querySelector("#reviewsCarousel");
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  REVIEWS.forEach((review) => fragment.append(createReviewCard(review)));
+  container.replaceChildren(fragment);
+}
+
+renderReviews();

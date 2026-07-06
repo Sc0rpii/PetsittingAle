@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+
+  --color-primary: #7E45CD;
+  --color-secondary: #EBDCFF;
+
+  --color-text: #4B4453;
+  --color-heading: #0B1C30;
+
+  --color-background: #F8F9FF;
+  --color-bg-secondary: #EFF4FF;
+  --color-white: #FFFFFF;
+
+  --color-shadow: rgba(33,49,69,0.4);
+
+  --font-display: "Baloo 2", sans-serif;
+  --font-body: "Roboto", sans-serif;
+
+  --radius-card: 1rem;
+}
+
+@layer components {
+  .nav-link {
+    @apply relative inline-flex items-center py-2 text-text transition duration-300 ease-out hover:-translate-y-0.5 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 260ms ease;
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .mobile-nav-link {
+    @apply px-3 py-2 transition duration-300 ease-out rounded-xl text-text hover:bg-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary;
+  }
+
+  .cta-button {
+    @apply inline-flex items-center justify-center rounded-2xl bg-primary px-5 py-3 text-lg font-bold text-white shadow-lg transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:translate-y-0 active:scale-[0.99];
+  }
+
+  .hero-cta {
+    @apply px-6 py-4 text-xl;
+  }
+
+  .tag {
+    @apply relative px-3 py-2 overflow-hidden text-xs font-bold transition-transform duration-300 ease-out isolate rounded-2xl text-primary font-body hover:-translate-y-1;
+  }
+
+  .tag::before,
+  .services-card::before,
+  .pet-photo-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -2;
+    border-radius: inherit;
+    background: conic-gradient(from var(--border-angle), transparent 0 72%, var(--color-primary) 78% 100%);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .tag::after,
+  .services-card::after,
+  .pet-photo-card::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    z-index: -1;
+    border-radius: calc(var(--radius-card) - 2px);
+    background: var(--color-background);
+  }
+
+  .tag::after {
+    background: var(--color-secondary);
+  }
+
+  .tag:hover::before,
+  .services-card:hover::before,
+  .pet-photo-card:hover::before {
+    opacity: 1;
+    animation: border-spin 900ms linear;
+  }
+
+  .services-card{
+    @apply relative self-start h-auto p-5 overflow-hidden transition duration-300 ease-out border border-shadow isolate rounded-card hover:-translate-y-2 hover:shadow-xl;
+  }
+
+  .about-photo {
+    @apply overflow-hidden rounded-2xl shadow-lg transition duration-500 ease-out hover:-translate-y-2 hover:rotate-1 hover:scale-[1.03] hover:shadow-2xl;
+  }
+
+  .about-photo img {
+    @apply object-cover w-full h-full transition duration-500 hover:scale-105;
+  }
+
+  .reviews-carousel {
+    @apply flex w-full gap-6 px-1 pb-8 overflow-x-auto snap-x snap-mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+  }
+
+  .reviews-carousel::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+
+  .reviews-carousel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .reviews-carousel::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--color-primary);
+  }
+
+  .card-reviews{
+    @apply h-auto min-w-[85%] snap-start rounded-2xl bg-background p-5 shadow-xl sm:min-w-[28rem] lg:min-w-[32rem];
+  }
+
+  .rating-paws {
+    @apply flex flex-row gap-3 pb-5 text-primary;
+  }
+
+  .rating-paws svg,
+  .half-paw {
+    @apply h-[19px] w-[23px] shrink-0;
+  }
+
+  .rating-paws svg {
+    fill: currentColor;
+  }
+
+  .rating-paws .empty {
+    @apply text-secondary;
+  }
+
+  .half-paw {
+    @apply relative inline-block text-secondary;
+  }
+
+  .half-paw svg {
+    @apply absolute inset-0;
+  }
+
+  .half-paw .half-full {
+    @apply text-primary;
+    clip-path: inset(0 50% 0 0);
+  }
+
+  .petPhoto {
+    @apply flex w-full gap-6 px-1 pb-8 overflow-x-auto snap-x snap-mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+  }
+
+  .petPhoto::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+
+  .petPhoto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .petPhoto::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--color-primary);
+  }
+
+  .pet-photo-card {
+    @apply relative isolate aspect-square min-w-[85%] snap-start overflow-hidden rounded-card p-1 shadow-xl transition duration-300 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl sm:min-w-[22rem] lg:min-w-[26rem];
+  }
+
+  .pet-photo-card img {
+    @apply h-full w-full rounded-[calc(var(--radius-card)-0.25rem)] object-cover transition duration-500 group-hover:scale-105;
+  }
+
+  .pet-photo-card:hover img {
+    @apply scale-110;
+  }
+
+  .footer-section {
+    @apply grid w-full gap-8 bg-bg-secondary px-6 py-10 text-center sm:px-10 md:grid-cols-[1.4fr_1fr_auto] md:items-center md:text-left;
+  }
+
+  .footer-brand {
+    @apply flex flex-col items-center min-w-0 gap-3 md:items-start;
+  }
+
+  .footer-nav {
+    @apply flex flex-wrap items-center justify-center text-sm font-bold gap-x-5 gap-y-3 text-text font-body md:justify-start;
+  }
+
+  .footer-link {
+    @apply transition duration-300 ease-out hover:-translate-y-0.5 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4;
+  }
+
+  .footer-social {
+    @apply flex flex-row items-center justify-center gap-4 md:justify-end;
+  }
+
+  .social-link {
+    @apply inline-flex items-center justify-center transition duration-300 ease-out bg-white rounded-full shadow-sm h-11 w-11 hover:-translate-y-1 hover:scale-105 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4;
+  }
+
+  .booking-form-shell {
+    @apply w-full rounded-2xl border border-shadow bg-background p-5 shadow-2xl sm:p-8;
+  }
+
+  .booking-form {
+    @apply mt-8 flex flex-col gap-8 text-left;
+  }
+
+  .form-section {
+    @apply rounded-2xl bg-white/45 p-5 shadow-sm;
+  }
+
+  .section-heading {
+    @apply mb-5 border-b border-slate-200 pb-3;
+  }
+
+  .section-heading h3 {
+    @apply text-2xl font-extrabold text-primary font-display;
+  }
+
+  .form-grid {
+    @apply grid gap-5;
+  }
+
+  .form-grid.two-cols {
+    @apply grid-cols-1 md:grid-cols-2;
+  }
+
+  .form-grid.three-cols {
+    @apply grid-cols-1 md:grid-cols-3;
+  }
+
+  .form-field {
+    @apply flex min-w-0 flex-col gap-2;
+  }
+
+  .form-field.full,
+  .form-checkbox.full {
+    @apply md:col-span-full;
+  }
+
+  .form-field label {
+    @apply text-base font-bold text-heading font-body;
+  }
+
+  .form-field label span {
+    @apply text-primary;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-heading shadow-sm outline-none transition duration-300 ease-out font-body placeholder:text-slate-400 focus:border-primary focus:ring-4 focus:ring-secondary;
+  }
+
+  .form-field input,
+  .form-field select {
+    @apply h-13;
+  }
+
+  .form-field select {
+    @apply appearance-none pr-11;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--color-primary) 50%),
+      linear-gradient(135deg, var(--color-primary) 50%, transparent 50%);
+    background-position:
+      calc(100% - 1.25rem) 50%,
+      calc(100% - 0.9rem) 50%;
+    background-size: 0.4rem 0.4rem, 0.4rem 0.4rem;
+    background-repeat: no-repeat;
+  }
+
+  .form-field textarea {
+    @apply min-h-40 resize-none leading-relaxed;
+  }
+
+  .form-field.is-valid input,
+  .form-field.is-valid select,
+  .form-field.is-valid textarea {
+    @apply border-primary/60;
+  }
+
+  .form-field.is-invalid input,
+  .form-field.is-invalid select,
+  .form-field.is-invalid textarea,
+  .form-field.is-invalid .form-checkbox {
+    @apply border-red-400 bg-red-50 text-red-950 focus:border-red-500 focus:ring-red-100;
+    animation: field-shake 220ms ease-out;
+  }
+
+  .field-message {
+    @apply min-h-5 text-sm font-medium text-red-600 font-body;
+  }
+
+  .form-checkbox {
+    @apply flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-4 text-base font-medium leading-relaxed text-text shadow-sm transition duration-300 ease-out font-body hover:border-primary/60;
+  }
+
+  .form-checkbox input {
+    @apply mt-1 h-5 w-5 shrink-0 rounded border-slate-300 text-primary accent-primary focus:ring-4 focus:ring-secondary;
+  }
+
+  .form-actions {
+    @apply flex flex-col items-stretch gap-4 sm:items-center;
+  }
+
+  .form-status {
+    @apply min-h-6 text-center text-sm font-medium text-text font-body;
+  }
+
+  .form-status.ready {
+    @apply text-primary;
+  }
+
+  .submit-button {
+    @apply inline-flex w-full items-center justify-center rounded-2xl bg-primary px-8 py-4 text-xl font-extrabold text-white shadow-xl transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 active:translate-y-0 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none disabled:hover:translate-y-0 disabled:hover:scale-100 sm:w-auto sm:min-w-72;
+  }
+
+  .legal-page {
+    @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-xl sm:p-10;
+  }
+
+  .legal-page h1 {
+    @apply mt-3 text-4xl font-extrabold text-heading font-display md:text-5xl;
+  }
+
+  .legal-page h2 {
+    @apply mt-8 text-2xl font-extrabold text-primary font-display;
+  }
+
+  .legal-page p {
+    @apply mt-4 text-base leading-relaxed text-text font-body md:text-lg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .mobile-nav-link,
+  .cta-button,
+  .tag,
+  .services-card,
+  .about-photo,
+  .about-photo img,
+  .pet-photo-card,
+  .pet-photo-card img,
+  .footer-link,
+  .social-link {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
+
+@keyframes field-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  35% {
+    transform: translateX(-4px);
+  }
+  70% {
+    transform: translateX(4px);
+  }
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
+}

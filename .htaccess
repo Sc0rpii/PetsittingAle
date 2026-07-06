@@ -1,0 +1,23 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^Page/home\.html$ https://www.petsittingale.it/ [R=301,L]
+    RewriteRule ^Page/booking\.html$ https://www.petsittingale.it/booking/ [R=301,L]
+    RewriteRule ^Page/privacy\.html$ https://www.petsittingale.it/privacy/ [R=301,L]
+    RewriteRule ^booking\.html$ https://www.petsittingale.it/booking/ [R=301,L]
+    RewriteRule ^privacy\.html$ https://www.petsittingale.it/privacy/ [R=301,L]
+
+    RewriteCond %{HTTPS} !=on [OR]
+    RewriteCond %{HTTP_HOST} !^www\.petsittingale\.it$ [NC]
+    RewriteRule ^ https://www.petsittingale.it%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
+</IfModule>

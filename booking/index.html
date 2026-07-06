@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prenota pet sitting a Palermo | PetsittingAle</title>
+    <meta name="description" content="Prenota un servizio di pet sitting a Palermo con PetsittingAle: passeggiate, visite a domicilio, sitting diurno e notturno per cani e gatti.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.petsittingale.it/booking/">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link href="../dist/output.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-background text-text">
+    <header class="px-6 py-5">
+        <nav class="flex items-center justify-between max-w-6xl mx-auto">
+            <a href="../" class="text-3xl font-extrabold text-primary font-display">PetsittingAle</a>
+            <a href="../" class="nav-link">Home</a>
+        </nav>
+    </header>
+
+    <main class="flex flex-col items-center max-w-5xl px-6 py-12 mx-auto">
+        <section id="form" class="booking-form-shell">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold font-display text-primary md:text-5xl">Richiesta</h1>
+                <p class="max-w-2xl mx-auto mt-3 text-base font-medium leading-relaxed text-text font-body md:text-lg">Compila i dettagli qui sotto e ti risponderemo entro 24 ore per confermare disponibilita e organizzare il servizio migliore per il tuo animale.</p>
+            </div>
+
+            <form action="../Backend/form.php" method="post" id="bookingForm" class="booking-form" novalidate>
+                <div class="hidden" aria-hidden="true">
+                    <label for="website">Non compilare questo campo</label>
+                    <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+                </div>
+                <input type="hidden" name="formStartedAt" id="formStartedAt" value="">
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <h3>I tuoi dettagli</h3>
+                    </div>
+                    <div class="form-grid two-cols">
+                        <div class="form-field" data-field="nome">
+                            <label for="nome">Nome completo <span aria-hidden="true">*</span></label>
+                            <input type="text" name="nome" id="nome" autocomplete="name" placeholder="Mario Rossi" required minlength="2">
+                            <p class="field-message" id="nome-error"></p>
+                        </div>
+                        <div class="form-field" data-field="email">
+                            <label for="email">Indirizzo email <span aria-hidden="true">*</span></label>
+                            <input type="email" name="email" id="email" autocomplete="email" placeholder="mario@email.com" required>
+                            <p class="field-message" id="email-error"></p>
+                        </div>
+                        <div class="form-field full" data-field="phone">
+                            <label for="phone">Numero di telefono <span aria-hidden="true">*</span></label>
+                            <input type="tel" name="phone" id="phone" autocomplete="tel" placeholder="+39 320 333 3954" required minlength="8">
+                            <p class="field-message" id="phone-error"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <h3>Dettagli dell'animale</h3>
+                    </div>
+                    <div class="form-grid three-cols">
+                        <div class="form-field" data-field="nomeA">
+                            <label for="nomeA">Nome animale <span aria-hidden="true">*</span></label>
+                            <input type="text" name="nomeA" id="nomeA" placeholder="Only" required minlength="2">
+                            <p class="field-message" id="nomeA-error"></p>
+                        </div>
+                        <div class="form-field" data-field="razza">
+                            <label for="razza">Razza / specie <span aria-hidden="true">*</span></label>
+                            <select name="razza" id="razza" required>
+                                <option value="">Seleziona</option>
+                                <option value="cane">Cane</option>
+                                <option value="gatto">Gatto</option>
+                                <option value="altro">Altro</option>
+                            </select>
+                            <p class="field-message" id="razza-error"></p>
+                        </div>
+                        <div class="form-field" data-field="age">
+                            <label for="age">Eta <span aria-hidden="true">*</span></label>
+                            <input type="number" name="age" id="age" min="0" max="40" step="0.5" placeholder="3" required>
+                            <p class="field-message" id="age-error"></p>
+                        </div>
+                        <div class="hidden form-field full" data-field="razzaAltro" id="razzaAltroWrap">
+                            <label for="razzaAltro">Specifica la tipologia <span aria-hidden="true">*</span></label>
+                            <input type="text" name="razzaAltro" id="razzaAltro" placeholder="Coniglio, criceto, pappagallo..." minlength="2">
+                            <p class="field-message" id="razzaAltro-error"></p>
+                        </div>
+                        <div class="form-field full" data-field="moreInfo">
+                            <label for="moreInfo">Requisiti speciali / farmaci</label>
+                            <textarea name="moreInfo" id="moreInfo" rows="6" placeholder="Scrivi qui farmaci, abitudini, paure, allergie o dettagli importanti."></textarea>
+                            <p class="field-message" id="moreInfo-error"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <div class="section-heading">
+                        <h3>Dettagli del servizio</h3>
+                    </div>
+                    <div class="form-grid two-cols">
+                        <div class="form-field full" data-field="services">
+                            <label for="services">Tipologia di servizio <span aria-hidden="true">*</span></label>
+                            <select name="services" id="services" required>
+                                <option value="">Seleziona un servizio</option>
+                                <option value="visitaDiurna">Visita diurna</option>
+                                <option value="visitaNotturna">Visita notturna</option>
+                                <option value="passeggiata">Passeggiata</option>
+                                <option value="casa">Sitting da me</option>
+                            </select>
+                            <p class="field-message" id="services-error"></p>
+                        </div>
+                        <div class="form-field" data-field="startDate">
+                            <label for="startDate">Data inizio <span aria-hidden="true">*</span></label>
+                            <input type="date" name="startDate" id="startDate" required>
+                            <p class="field-message" id="startDate-error"></p>
+                        </div>
+                        <div class="form-field" data-field="endDate">
+                            <label for="endDate">Data fine</label>
+                            <input type="date" name="endDate" id="endDate">
+                            <p class="field-message" id="endDate-error"></p>
+                        </div>
+                        <div class="form-field" data-field="startTime">
+                            <label for="startTime">Orario inizio <span aria-hidden="true">*</span></label>
+                            <input type="time" name="startTime" id="startTime" required>
+                            <p class="field-message" id="startTime-error"></p>
+                        </div>
+                        <div class="form-field" data-field="endTime">
+                            <label for="endTime">Orario fine <span aria-hidden="true">*</span></label>
+                            <input type="time" name="endTime" id="endTime" required>
+                            <p class="field-message" id="endTime-error"></p>
+                        </div>
+                        <label class="form-checkbox full" for="photoTC">
+                            <input type="checkbox" name="photoTC" id="photoTC" value="1">
+                            <span>Accetto che i video e foto del mio animale domestico vengano pubblicati sulle piattaforme dedicate.</span>
+                        </label>
+                        <div class="form-field full" data-field="privacyPolicy">
+                            <label class="form-checkbox" for="privacyPolicy">
+                                <input type="checkbox" name="privacyPolicy" id="privacyPolicy" value="1" required>
+                                <span>Dichiaro di aver letto e accettato la <a href="../privacy/" class="underline text-primary underline-offset-4 hover:text-heading" target="_blank" rel="noopener noreferrer">Privacy Policy</a> e autorizzo il trattamento dei dati per gestire la richiesta. <strong class="text-primary">*</strong></span>
+                            </label>
+                            <p class="field-message" id="privacyPolicy-error"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <p id="formStatus" class="form-status">Completa i campi obbligatori per inviare la richiesta.</p>
+                    <button type="submit" id="submitBtn" class="submit-button" disabled>Invia richiesta</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer id="footer" class="footer-section">
+        <div class="footer-brand">
+            <h2 class="text-3xl font-extrabold font-display text-primary sm:text-4xl">PetsittingAle</h2>
+            <p class="max-w-md text-sm leading-relaxed text-text font-body sm:text-base">Pet sitting a Palermo per cani e gatti: passeggiate, visite a domicilio e cura amorevole dei tuoi animali.</p>
+            <p class="text-sm text-text font-body">©2026 PetsittingAle. Tutti i diritti riservati.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Navigazione footer">
+            <a href="../#about" class="footer-link">Me</a>
+            <a href="../#services" class="footer-link">Servizi</a>
+            <a href="../#reviews" class="footer-link">Recensioni</a>
+            <a href="../#gallery" class="footer-link">Galleria</a>
+            <a href="./" class="footer-link">Prenota</a>
+            <a href="../privacy/" class="footer-link">Privacy</a>
+        </nav>
+        <div id="social" class="footer-social">
+            <a href="https://www.facebook.com/profile.php?id=61591878744830" target="_blank" rel="noopener noreferrer" id="facebook" class="social-link" aria-label="Facebook PetsittingAle">
+                <svg fill="#7E45CD" width="30px" height="30px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M21.95 5.005l-3.306-.004c-3.206 0-5.277 2.124-5.277 5.415v2.495H10.05v4.515h3.317l-.004 9.575h4.641l.004-9.575h3.806l-.003-4.514h-3.803v-2.117c0-1.018.241-1.533 1.566-1.533l2.366-.001.01-4.256z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/_pet.sitter_ale/" target="_blank" rel="noopener noreferrer" id="instagram" class="social-link" aria-label="Instagram PetsittingAle">
+                <svg width="30px" height="30px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.5 5H9.5C7.29086 5 5.5 6.79086 5.5 9V15C5.5 17.2091 7.29086 19 9.5 19H15.5C17.7091 19 19.5 17.2091 19.5 15V9C19.5 6.79086 17.7091 5 15.5 5Z" stroke="#7E45CD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 15C10.8431 15 9.5 13.6569 9.5 12C9.5 10.3431 10.8431 9 12.5 9C14.1569 9 15.5 10.3431 15.5 12C15.5 12.7956 15.1839 13.5587 14.6213 14.1213C14.0587 14.6839 13.2956 15 12.5 15Z" stroke="#7E45CD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="15.5" y="9" width="2" height="2" rx="1" transform="rotate(-90 15.5 9)" fill="#7E45CD"/>
+                    <rect x="16" y="8.5" width="1" height="1" rx="0.5" transform="rotate(-90 16 8.5)" stroke="#7E45CD" stroke-linecap="round"/>
+                </svg>
+            </a>
+            <a href="https://www.tiktok.com/@pet._sitter_ale" target="_blank" rel="noopener noreferrer" id="tiktok" class="social-link" aria-label="TikTok PetsittingAle">
+                <svg fill="#7E45CD" width="30px" height="30px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z"></path>
+                </svg>
+            </a>
+        </div>
+    </footer>
+    <script src="../script/form.js"></script>
+</body>
+</html>

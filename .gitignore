@@ -1,0 +1,23 @@
+# Dependencies and build tooling
+node_modules/
+.npm/
+
+# macOS / external drive metadata
+.DS_Store
+._*
+**/._*
+
+# Local environment and private backend data
+.env
+.env.*
+Backend/
+
+# Private notes and learning material
+consigli.txt
+webdev-masterclass.md
+webdev-exercises.md
+
+# Runtime data
+Backend/requests/
+Backend/rate-limit/
+*.log

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /Backend/
+Disallow: /form-result.php
+
+Sitemap: https://www.petsittingale.it/sitemap.xml
